@@ -1,0 +1,193 @@
+.day-selector-section {
+    padding: 100px 10%;
+    background-color: var(--bg-main);
+    text-align: center;
+}
+
+.section-header h2 {
+    font-size: 2.5rem;
+    color: var(--text-main);
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.section-header p {
+    color: var(--text-main);
+    opacity: 0.7;
+    margin-bottom: 40px;
+    font-size: 1.1rem;
+}
+
+.date-search-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.search-bar {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    padding: 10px;
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid rgba(139, 111, 71, 0.2);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.month-picker, .day-input {
+    border: none;
+    background: transparent;
+    padding: 10px 20px;
+    outline: none;
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--text-main);
+    font-weight: 600;
+}
+
+.day-input {
+    width: 100px;
+    border-left: 1px solid rgba(0,0,0,0.1);
+}
+
+.search-btn {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.search-btn:hover {
+    background-color: var(--text-main);
+}
+
+.separator-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 50px;
+    gap: 20px;
+}
+
+.separator-text::before, .separator-text::after {
+    content: "";
+    height: 1px;
+    width: 100px;
+    background: rgba(0,0,0,0.1);
+}
+
+.separator-text span {
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: var(--primary);
+}
+
+.days-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 24px;
+}
+
+.day-card {
+    background-color: var(--card-bg);
+    padding: 30px 24px;
+    border-radius: 20px;
+    border: 1px solid rgba(0,0,0,0.05);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 200px;
+    text-align: left;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+}
+
+.day-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 25px -5px rgba(139, 111, 71, 0.15);
+    border-color: var(--primary-light);
+}
+
+.day-card.active {
+    background-color: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.day-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 4px;
+    font-weight: 700;
+}
+
+.amharic-label {
+    font-size: 0.9rem;
+    opacity: 0.6;
+    font-weight: 600;
+}
+
+.day-card.active .amharic-label {
+    color: white;
+    opacity: 0.8;
+}
+
+.day-theme {
+    margin-top: auto;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--primary);
+    letter-spacing: 0.5px;
+}
+
+.day-card.active .day-theme {
+    color: var(--primary-light);
+}
+
+.arrow-icon {
+    align-self: flex-end;
+    margin-top: 10px;
+    font-size: 1.3rem;
+    color: var(--primary-light);
+    transition: transform 0.3s;
+}
+
+.day-card.active .arrow-icon {
+    color: white;
+}
+
+.day-card:hover .arrow-icon {
+    transform: translateX(8px);
+}
+
+/* Responsiveness */
+@media (max-width: 1024px) {
+    .days-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .day-selector-section {
+        padding: 60px 8%;
+    }
+    .days-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .days-grid {
+        grid-template-columns: 1fr;
+    }
+    .day-card {
+        height: 160px;
+    }
+}
