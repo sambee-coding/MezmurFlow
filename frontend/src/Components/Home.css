@@ -153,3 +153,82 @@ body {
     object-fit: cover;
     display: block;
 }
+
+/* --- Responsive Media Queries --- */
+
+/* Tablets and small laptops */
+@media (max-width: 1024px) {
+    .header {
+        padding: 0 5%;
+    }
+
+    .hero-content {
+        flex-direction: column;
+        padding: 60px 5% 100px; /* More space at bottom for scrolling */
+        text-align: center;
+        gap: 40px;
+    }
+
+    .hero-text {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .hero-text h1 {
+        font-size: 3.5rem;
+        letter-spacing: -1px;
+    }
+
+    .hero-text p {
+        max-width: 100%;
+    }
+
+    .hero-btns {
+        justify-content: center;
+    }
+
+    .hero-card {
+        width: 100%;
+        max-width: 400px;
+        height: 400px;
+    }
+}
+
+/* Mobile Phones */
+@media (max-width: 768px) {
+    .header nav ul {
+        gap: 20px;
+        font-size: 0.9rem;
+    }
+
+    .hero-text h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-text p {
+        font-size: 1.1rem;
+    }
+
+    .header nav .Logo {
+        height: 40px;
+    }
+}
+
+/* Extra Small Phones */
+@media (max-width: 480px) {
+    .header nav ul {
+        display: none; /* Hide nav links for simplicity on tiny screens */
+    }
+    
+    .hero-text h1 {
+        font-size: 2rem;
+    }
+
+    .btn-primary, .btn-secondary {
+        padding: 12px 24px;
+        font-size: 0.95rem;
+    }
+}
