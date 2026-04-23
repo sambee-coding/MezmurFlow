@@ -20,6 +20,37 @@ function DaySelector() {
   const [selectedDay, setSelectedDay] = useState(null);
   const [ethDate, setEthDate] = useState({ day: "", month: ethiopianMonths[0] });
 
+
+  function getFinalSelectedDay(selectedDay, ethDate, days) {
+    // 1. CLICK has priority
+    if (selectedDay !== null && selectedDay !== undefined) {
+      return days.find(day => day.id === selectedDay);
+    }
+
+    // 2. SEARCH fallback
+    if (ethDate.day && ethDate.month) {
+      return {
+        id: null,
+        name: `${ethDate.month} ${ethDate.day}`,
+        theme: "Search Result"
+      };
+    }
+
+    return null;
+  }
+
+  const finalDay = getFinalSelectedDay(selectedDay, ethDate, days);
+
+  const handleSearchChange = (updates) => {
+    setSelectedDay(null); // Clear card selection when searching
+    setEthDate({ ...ethDate, ...updates });
+  };
+
+  const handleCardClick = (id) => {
+    setSelectedDay(id);
+    setEthDate({ day: "", month: ethiopianMonths[0] }); // Clear search when clicking card
+  };
+
   return (
     <section className="day-selector-section">
       <div className="section-header">
@@ -31,7 +62,7 @@ function DaySelector() {
         <div className="search-bar">
           <select 
             value={ethDate.month} 
-            onChange={(e) => setEthDate({...ethDate, month: e.target.value})}
+            onChange={(e) => handleSearchChange({ month: e.target.value })}
             className="month-picker"
           >
             {ethiopianMonths.map(m => <option key={m} value={m}>{m}</option>)}
@@ -42,12 +73,19 @@ function DaySelector() {
             min="1" 
             max="30"
             value={ethDate.day}
-            onChange={(e) => setEthDate({...ethDate, day: e.target.value})}
+            onChange={(e) => handleSearchChange({ day: e.target.value })}
             className="day-input"
           />
           <button className="search-btn">Search Mezmur</button>
         </div>
       </div>
+
+      {finalDay && (
+        <div className="selection-result">
+          <span className="selection-badge">Showing results for: <strong>{finalDay.name}</strong></span>
+          {finalDay.theme && <p className="selection-theme">Theme: {finalDay.theme}</p>}
+        </div>
+      )}
 
       <div className="separator-text">
         <span>OR CHOOSE BY DAY</span>
@@ -58,7 +96,7 @@ function DaySelector() {
           <div 
             key={day.id} 
             className={`day-card ${selectedDay === day.id ? "active" : ""}`}
-            onClick={() => setSelectedDay(day.id)}
+            onClick={() => handleCardClick(day.id)}
           >
             <div className="day-name">
               <h3>{day.name}</h3>
