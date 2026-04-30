@@ -1,6 +1,7 @@
 import './App.css'
 import Home from "./Components/Home.jsx"
 import DaySelector from "./Components/DaySelector.jsx"
+import  Practice  from './Components/PracticeTest.jsx'
 
 function App() {
  
@@ -9,6 +10,9 @@ function App() {
     <>
     <Home />
     <DaySelector />
+    <Practice />
+
+
     </>
   )
 }
