@@ -51,6 +51,11 @@ body {
     color: var(--text-main);
     font-weight: 500;
 }
+.header nav ul li:hover{
+    color: var(--primary-light);
+    cursor: pointer;
+
+}
 .hero-content {
     flex: 1;
     display: flex;

@@ -15,10 +15,11 @@ function Home() {
                     <img src={Logo} alt="MezmurFlow-Logo"/>
                 </div>
                 <ul>
-                <li>Home</li>
+                <li>Hommy</li>
                 <li>About</li>
-                <li>Contact</li>
                 <li>Features</li>
+                <li>Feedback</li>
+                
                 </ul>
             </nav>
         </header>

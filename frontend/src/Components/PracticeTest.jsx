@@ -31,7 +31,7 @@ function PracticeTest(){
             {data && (
                 <div style={{marginTop: '20px',border:'2px solid #cc',padding: '10px'}}>
                     <h4>Topic: {data.topic}</h4>
-                    <p>{data.spiritual_story.content}</p> 
+                  <p>{data.story || data.spiritual_story?.content || "No story content found"}</p>
                     
                     </div>
             )}
