@@ -1,0 +1,20 @@
+# Dependency folders
+node_modules/
+dist/
+build/
+
+# Environment variables (Secrets!)
+.env
+.env.local
+.env.*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Practice folders (don't commit yet)
+mezmueflow-practice/
+
+# Local testing scripts
+list-my-models.js
+checkModels.js
