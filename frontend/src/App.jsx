@@ -11,6 +11,8 @@ function App() {
       {/* Set Home as the default starting page */}
       <Route path='/' element={<Home />} />
       <Route path='/Home' element={<Home />} />
+      <Route path='/Commune' element={<SignIn />} />
+
       
       {/* Other pages */}
       <Route path='/DaySelector' element={<DaySelector />} />

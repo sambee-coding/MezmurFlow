@@ -3,6 +3,7 @@ import "./Home.css";
 import Logo from "../assets/Logo.png"
 import Orthodox from "../assets/Orthodox.jpg"
 import Fouro4 from '/src/Components/Fouro4.jsx'
+import { Link } from "react-router-dom";
 
 
 
@@ -19,7 +20,8 @@ function Home() {
                 </div>
                 <ul>
                 <li>Haven</li>
-                <li>Commune</li>
+               <li><Link to="/Commune">Commune</Link></li>
+
                 <li style={{ display: "none" }}>Origin</li>
                 <li style={{ display: "none" }}>Communion</li>
                 <li style={{ display: "none" }}>Reflection</li>
