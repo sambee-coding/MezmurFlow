@@ -4,6 +4,7 @@ import DaySelector from "./Components/DaySelector.jsx"
 import Practice from './Components/PracticeTest.jsx'
 import { Route, Routes } from 'react-router-dom'
 import Fouro4 from './Components/Fouro4.jsx'
+import SignIn from "./Components/SignIn.jsx"
 
 function App() {
   return (

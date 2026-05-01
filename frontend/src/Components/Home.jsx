@@ -20,7 +20,7 @@ function Home() {
                 </div>
                 <ul>
                 <li>Haven</li>
-               <li><Link to="/Commune">Commune</Link></li>
+               <li><Link to="/Commune" className="Commune-link">Commune</Link></li>
 
                 <li style={{ display: "none" }}>Origin</li>
                 <li style={{ display: "none" }}>Communion</li>

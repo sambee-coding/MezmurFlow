@@ -239,3 +239,15 @@ body {
         font-size: 0.95rem;
     }
 }
+
+.Commune-link{
+    text-decoration: none;
+    color: var(--text-main);
+    
+}
+.Commune-link:hover{
+      color: var(--primary-light);
+    cursor: pointer;
+    transition: color 0.3s ease;
+    transform: scale(1);
+}
