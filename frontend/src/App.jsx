@@ -5,6 +5,7 @@ import Practice from './Components/PracticeTest.jsx'
 import { Route, Routes } from 'react-router-dom'
 import Fouro4 from './Components/Fouro4.jsx'
 import SignIn from "./Components/SignIn.jsx"
+import Origin from "./Components/Origin.jsx"
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Route path='/' element={<Home />} />
       <Route path='/Home' element={<Home />} />
       <Route path='/Commune' element={<SignIn />} />
+      <Route path='/Origin' element={<Origin />} />
 
       
       {/* Other pages */}
