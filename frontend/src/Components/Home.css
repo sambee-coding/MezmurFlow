@@ -54,6 +54,8 @@ body {
 .header nav ul li:hover{
     color: var(--primary-light);
     cursor: pointer;
+    transition: color 0.3s ease;
+    transform: scale(1);
 
 }
 .hero-content {

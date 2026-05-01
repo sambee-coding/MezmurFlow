@@ -2,12 +2,15 @@ import React from "react"
 import "./Home.css";
 import Logo from "../assets/Logo.png"
 import Orthodox from "../assets/Orthodox.jpg"
+import Fouro4 from '/src/Components/Fouro4.jsx'
+
+
 
 function Home() {
  
 
   return (
-    <>
+    
     <section className="hero">
         <header className="header">
             <nav>
@@ -15,11 +18,11 @@ function Home() {
                     <img src={Logo} alt="MezmurFlow-Logo"/>
                 </div>
                 <ul>
-                <li>Hommy</li>
-                <li>About</li>
-                <li>Features</li>
-                <li>Feedback</li>
-                
+                <li>Haven</li>
+                <li>Commune</li>
+                <li style={{ display: "none" }}>Origin</li>
+                <li style={{ display: "none" }}>Communion</li>
+                <li style={{ display: "none" }}>Reflection</li>
                 </ul>
             </nav>
         </header>
@@ -39,7 +42,7 @@ function Home() {
             </div>
         </section>
     </section>
-    </>
+    
   )
 }
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "./DaySelector.css";
 
 const ethiopianMonths = [
@@ -21,10 +21,14 @@ function DaySelector() {
   const [ethDate, setEthDate] = useState({ day: "", month: ethiopianMonths[0] });
   const [loading, setLoading] = useState(false);
   const [mezmurData, setMezmurData] = useState(null);
-
+  const [animate, setAnimate] = useState(false);
+  
+  const resultsRef = useRef(null);
   const fetchMezmurData = async (dayName, month, day) => {
     setLoading(true);
     setMezmurData(null);
+    setAnimate(false);
+
     try {
       // IMPORTANT: Ensure the port here matches your actual backend port!
       let url = `http://localhost:5000/api/mezmur?`;
@@ -36,6 +40,14 @@ function DaySelector() {
       
       if (data && typeof data === 'object') {
         setMezmurData(data);
+        // Trigger animation after DOM has rendered the new data
+        setTimeout(() => {
+          setAnimate(true);
+          // Smooth scroll to the results
+          if (resultsRef.current) {
+            resultsRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 50);
       } else {
         throw new Error("Invalid data format");
       }
@@ -111,7 +123,7 @@ function DaySelector() {
       {loading && <div className="loading-spinner">✨ Finding spiritual treasures...</div>}
 
       {mezmurData && (
-        <div className="content-results">
+         <div ref={resultsRef} className={`content-results ${animate ? "show" : ""}`}>
           <div className="result-header">
             <h3>{mezmurData.theme || mezmurData.topic || "Spiritual Content"}</h3>
             <span className="badge">Daily Selection</span>
