@@ -1,27 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Logo from "../assets/Logo.png";
+import useAuth from "../hooks/useAuth";
 
 function Navbar() {
-  const [user, setUser] = useState(null);
+  const { user, isLoggedIn, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
-  useEffect(() => {
-    // Check if a user is saved in localStorage
-    const savedUser = localStorage.getItem("user");
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
-    }
-  }, [location]); // Re-check every time the page changes
-
   const handleLogout = () => {
-    localStorage.removeItem("user");
-    setUser(null);
+    logout();
     navigate("/");
   };
 
-  // Do not show the Navbar on the Sign In or Sign Up pages
+  // Hide navbar on sign-in ("/Commune") and sign-up ("/Haven") pages
   if (location.pathname === "/Commune" || location.pathname === "/Haven") {
     return null;
   }
@@ -30,24 +22,27 @@ function Navbar() {
     <header className="header">
       <nav>
         <div className="Logo">
-          <Link to="/"><img src={Logo} alt="MezmurFlow Logo" style={{ height: "35px" }} /></Link>
+          <Link to="/">
+            <img src={Logo} alt="MezmurFlow Logo" style={{ height: "35px" }} />
+          </Link>
         </div>
         <ul>
-          <li><Link to="/Home" className="nav-link">Haven</Link></li>
-          <li><Link to="/DaySelector" className="nav-link">Discovery</Link></li>
-          
-          {user ? (
+          <li>
+            <Link to="/Home" className="nav-link">Haven</Link>
+          </li>
+          <li>
+            <Link to="/DaySelector" className="nav-link">Discovery</Link>
+          </li>
+          {isLoggedIn ? (
             <>
               <li className="user-name">☦️ {user.name}</li>
               <li>
-                <button onClick={handleLogout} className="logout-btn">
-                    Sign Out
-                </button>
+                <button onClick={handleLogout} className="logout-btn">Sign Out</button>
               </li>
             </>
           ) : (
             <li>
-                <Link to="/Commune" className="Commune-link">Commune</Link>
+              <Link to="/Commune" className="Commune-link">Commune</Link>
             </li>
           )}
         </ul>

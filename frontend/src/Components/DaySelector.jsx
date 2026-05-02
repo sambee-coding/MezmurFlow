@@ -1,4 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 import "./DaySelector.css";
 
 const ethiopianMonths = [
@@ -17,11 +19,21 @@ const days = [
 ];
 
 function DaySelector() {
+  const { isLoggedIn } = useAuth();
+  const navigate = useNavigate();
   const [selectedDay, setSelectedDay] = useState(null);
   const [ethDate, setEthDate] = useState({ day: "", month: ethiopianMonths[0] });
   const [loading, setLoading] = useState(false);
   const [mezmurData, setMezmurData] = useState(null);
   const [animate, setAnimate] = useState(false);
+
+  // Protection logic: Redirect to Sign In if not logged in
+  useEffect(() => {
+    const savedUser = localStorage.getItem("user");
+    if (!savedUser) {
+      navigate("/Commune");
+    }
+  }, [navigate]);
   
   const resultsRef = useRef(null);
   const fetchMezmurData = async (dayName, month, day) => {
