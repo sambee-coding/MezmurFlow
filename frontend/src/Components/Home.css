@@ -31,15 +31,24 @@ body {
     width: 100%;
 }
 .header nav .Logo {
-    height: 50px;
+    height: 35px;
     width: auto;
     display: flex;
     align-items: center;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 .Logo img {
     height: 100%;
     width: auto;
     object-fit: contain;
+    filter: drop-shadow(0 0 8px rgba(139, 111, 71, 0.1));
+    transition: all 0.4s ease;
+}
+.Logo:hover {
+    transform: scale(1.1) rotate(-3deg);
+}
+.Logo:hover img {
+    filter: drop-shadow(0 0 15px rgba(139, 111, 71, 0.3));
 }
 .header nav ul {
     display: flex;
@@ -250,4 +259,43 @@ body {
     cursor: pointer;
     transition: color 0.3s ease;
     transform: scale(1);
+}
+
+/* Navbar Enhancements */
+.nav-link {
+    text-decoration: none;
+    color: var(--text-main);
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--primary);
+}
+
+.user-name {
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 0.95rem;
+    background: rgba(139, 111, 71, 0.1);
+    padding: 6px 15px;
+    border-radius: 50px;
+}
+
+.logout-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.logout-btn:hover {
+    background: var(--text-main);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(139, 111, 71, 0.2);
 }

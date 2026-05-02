@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const mezmurRoutes = require("./routes/mezmurRoutes");
+const authRoutes = require('./routes/authRoutes');
 
 dotenv.config();
 
@@ -18,7 +19,7 @@ app.use(express.json());
 
 // Routes
 app.use("/api/mezmur", mezmurRoutes);
-
+app.use("/api/auth",authRoutes);
 // Health Check
 app.get("/", (req, res) => {
   res.send("MezmurFlow Backend is running...");

@@ -9,27 +9,8 @@ import SignIn from "./SignIn";
 
 
 function Home() {
- 
-
   return (
-    
     <section className="hero">
-        <header className="header">
-            <nav>
-                <div className="Logo">
-                    <img src={Logo} alt="MezmurFlow-Logo"/>
-                </div>
-                <ul>
-                <li>Haven</li>
-               <li><Link to="/Commune" className="Commune-link">Commune</Link></li>
-
-                <li style={{ display: "none" }}>Origin</li>
-                <li style={{ display: "none" }}>Communion</li>
-                <li style={{ display: "none" }}>Reflection</li>
-                </ul>
-            </nav>
-        </header>
-
         <section className="hero-content">
             <div className="hero-text">
                 <span className="badge">Discover Daily Peace</span>

@@ -1,32 +1,34 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./SignIn.css";
 import Logo from "../assets/Logo.png";
-import { useState } from "react";
 
 function SignIn() {
-
+    const navigate = useNavigate();
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
 
-    const onHandleSubmit = (e) =>{
-        e.preventDefault();
-        console.log(email, password);
+    const onHandleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("Shipping data...", email, password);
 
-        try{
-            const response = await fetch('http://localhost:5000/api/auth/signin',{
-            method:"POST",
+    try {
+        const response = await fetch("http://localhost:5000/api/auth/signin", {
+            method: "POST",
             headers: {
-                "content-type":"application/json"
+                "Content-Type": "application/json",
             },
-            body: JSON.stringify({email,password});
-                
-                
-                
+            body: JSON.stringify({ email, password }),
         });
+
         const data = await response.json();
-        console.log("server responeded with data:",data);    if (response.ok) {
-            alert("Success! You are signed in.");
+        console.log("Server responded with:", data);
+        
+        if (response.ok) {
+            // Save to localStorage so the app remembers the user
+            localStorage.setItem("user", JSON.stringify(data.user));
+            // Redirect to the DaySelector page
+            navigate("/DaySelector");
         } else {
             alert("Error: " + data.message);
         }
@@ -34,6 +36,7 @@ function SignIn() {
         console.error("Shipping failed:", err);
     }
 };
+
   return (
     <div className="signin-container">
       <div className="signin-glass-card">
@@ -67,7 +70,7 @@ function SignIn() {
         </form>
 
         <div className="signin-footer">
-          <p>Don't have an account? <a href="#">Create Haven</a></p>
+          <p>Don't have an account? <Link to="/Haven">Create Haven</Link></p>
         </div>
       </div>
     </div>
