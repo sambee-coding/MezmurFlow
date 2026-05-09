@@ -19,35 +19,90 @@ const days = [
 ];
 
 function DaySelector() {
-  const { isLoggedIn } = useAuth();
+  const { token, isLoggedIn } = useAuth();
   const navigate = useNavigate();
   const [selectedDay, setSelectedDay] = useState(null);
   const [ethDate, setEthDate] = useState({ day: "", month: ethiopianMonths[0] });
   const [loading, setLoading] = useState(false);
   const [mezmurData, setMezmurData] = useState(null);
   const [animate, setAnimate] = useState(false);
+  const [activeVideoId, setActiveVideoId] = useState(null);
+  const [favorites, setFavorites] = useState([]);
 
   // Protection logic: Redirect to Sign In if not logged in
   useEffect(() => {
-    const savedUser = localStorage.getItem("user");
-    if (!savedUser) {
+    if (!token) {
       navigate("/Commune");
+    } else {
+      fetchFavorites();
     }
-  }, [navigate]);
+  }, [token, navigate]);
+
+  const fetchFavorites = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/favorites", {
+        headers: { "Authorization": `Bearer ${token}` }
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setFavorites(data);
+      }
+    } catch (error) {
+      console.error("Error fetching favorites:", error);
+    }
+  };
+
+  const toggleFavorite = async (mezmur) => {
+    const isFav = favorites.some(f => f.videoId === mezmur.videoId);
+    
+    try {
+      if (isFav) {
+        await fetch(`http://localhost:5000/api/favorites/${mezmur.videoId}`, {
+          method: "DELETE",
+          headers: { "Authorization": `Bearer ${token}` }
+        });
+        setFavorites(favorites.filter(f => f.videoId !== mezmur.videoId));
+      } else {
+        const response = await fetch("http://localhost:5000/api/favorites", {
+          method: "POST",
+          headers: { 
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            title: mezmur.title,
+            artist: mezmur.artist,
+            videoId: mezmur.videoId
+          })
+        });
+        if (response.ok) {
+          const newFav = await response.json();
+          setFavorites([...favorites, newFav]);
+        }
+      }
+    } catch (error) {
+      console.error("Error toggling favorite:", error);
+    }
+  };
   
   const resultsRef = useRef(null);
+
   const fetchMezmurData = async (dayName, month, day) => {
     setLoading(true);
     setMezmurData(null);
     setAnimate(false);
+    setActiveVideoId(null);
 
     try {
-      // IMPORTANT: Ensure the port here matches your actual backend port!
       let url = `http://localhost:5000/api/mezmur?`;
       if (dayName) url += `day=${dayName}`;
       else url += `month=${month}&ethDay=${day}`;
 
-      const response = await fetch(url);
+      const response = await fetch(url, {
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      });
       const data = await response.json();
       
       if (data && typeof data === 'object') {
@@ -135,37 +190,76 @@ function DaySelector() {
       {loading && <div className="loading-spinner">✨ Finding spiritual treasures...</div>}
 
       {mezmurData && (
-         <div ref={resultsRef} className={`content-results ${animate ? "show" : ""}`}>
-          <div className="result-header">
-            <h3>{mezmurData.theme || mezmurData.topic || "Spiritual Content"}</h3>
-            <span className="badge">Daily Selection</span>
-          </div>
+  <div ref={resultsRef} className={`content-results ${animate ? "show" : ""}`}>
+    <div className="result-header">
+      {/* 1. This should be the theme title */}
+      <h3>{mezmurData.theme || "Daily Selection"}</h3>
+      <span className="badge">Daily Selection</span>
+    </div>
 
-          <div className="results-grid">
-            <div className="mezmur-list">
-              <h4>Recommended Mezmurs</h4>
-              <ul>
-                {(mezmurData.mezmurs || mezmurData.recommended_mezmurs || []).map((m, i) => (
-                  <li key={i}>
-                    <span className="m-title">{m.title}</span>
-                    <span className="m-artist">{m.artist}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+    <div className="results-grid">
+      <div className="mezmur-list">
+        <h4>Recommended Mezmurs</h4>
+        {/* 2. The list starts here */}
+        <ul>
+          {(mezmurData.mezmurs || mezmurData.recommended_mezmurs || []).map((m, i) => (
+            <li key={i} className="mezmur-item">
+              <div className="m-info">
+                <span className="m-title">{m.title}</span>
+                <span className="m-artist">{m.artist}</span>
+              </div>
+              
+              {/* 3. The Play button */}
+              <div className="m-actions">
+                {m.videoId && (
+                  <button 
+                    onClick={() => setActiveVideoId(m.videoId)}
+                    className={`play-btn ${activeVideoId === m.videoId ? 'playing' : ''}`}
+                  >
+                    {activeVideoId === m.videoId ? 'Playing...' : '▶ Play'}
+                  </button>
+                )}
+                <button 
+                  className={`fav-btn ${favorites.some(f => f.videoId === m.videoId) ? 'active' : ''}`}
+                  onClick={() => toggleFavorite(m)}
+                >
+                  {favorites.some(f => f.videoId === m.videoId) ? '❤️' : '🤍'}
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
 
-            <div className="story-section">
-              <h4>Senkessar Story</h4>
-              <p>{mezmurData.story || mezmurData.spiritual_story?.content || "No story available for this date."}</p>
-            </div>
+      <div className="story-section">
+        {activeVideoId ? (
+          <div className="video-player-container">
+            <iframe
+              width="100%"
+              height="250"
+              src={`https://www.youtube.com/embed/${activeVideoId}?autoplay=1`}
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+            <button className="close-player" onClick={() => setActiveVideoId(null)}>Close Player</button>
           </div>
+        ) : (
+          <>
+            <h4>Senkessar Story</h4>
+            <p>{mezmurData.story || "No story available for this date."}</p>
+          </>
+        )}
+      </div>
+    </div>
 
-          <div className="reflection-footer">
-            <h4>Daily Reflection</h4>
-            <p>"{mezmurData.reflection || "May the blessings of this day be with you."}"</p>
-          </div>
-        </div>
-      )}
+    <div className="reflection-footer">
+      <h4>Daily Reflection</h4>
+      <p>"{mezmurData.reflection || "May the blessings of this day be with you."}"</p>
+    </div>
+  </div>
+)}
     </section>
   );
 }

@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 import "./SignIn.css";
 import Logo from "../assets/Logo.png";
 
 function SignIn() {
+    const { login } = useAuth();
     const navigate = useNavigate();
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
 
     const onHandleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Shipping data...", email, password);
+    console.log("Signing in...", email);
 
     try {
         const response = await fetch("http://localhost:5000/api/auth/signin", {
@@ -22,18 +24,15 @@ function SignIn() {
         });
 
         const data = await response.json();
-        console.log("Server responded with:", data);
         
         if (response.ok) {
-            // Save to localStorage so the app remembers the user
-            localStorage.setItem("user", JSON.stringify(data.user));
-            // Redirect to the DaySelector page
+            login(data.user, data.token);
             navigate("/DaySelector");
         } else {
             alert("Error: " + data.message);
         }
     } catch (err) {
-        console.error("Shipping failed:", err);
+        console.error("Sign in failed:", err);
     }
 };
 

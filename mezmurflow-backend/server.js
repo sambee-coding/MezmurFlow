@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const mezmurRoutes = require("./routes/mezmurRoutes");
 const authRoutes = require('./routes/authRoutes');
+const favoriteRoutes = require('./routes/favoriteRoutes');
 
 dotenv.config();
 
@@ -33,6 +34,7 @@ app.use(express.json());
 // Routes
 app.use("/api/mezmur", mezmurRoutes);
 app.use("/api/auth",authRoutes);
+app.use("/api/favorites", favoriteRoutes);
 // Health Check
 app.get("/", (req, res) => {
   res.send("MezmurFlow Backend is running...");

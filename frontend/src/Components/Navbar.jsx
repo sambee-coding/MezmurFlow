@@ -35,6 +35,9 @@ function Navbar() {
           </li>
           {isLoggedIn ? (
             <>
+              <li>
+                <Link to="/Sanctuary" className="nav-link">Sanctuary</Link>
+              </li>
               <li className="user-name">☦️ {user.name}</li>
               <li>
                 <button onClick={handleLogout} className="logout-btn">Sign Out</button>

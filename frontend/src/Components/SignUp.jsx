@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 import "./SignIn.css"; // Reusing the premium styles
 import Logo from "../assets/Logo.png";
 
 function SignUp() {
+  const { login } = useAuth();
   const [formData, setFormData] = useState({ name: "", email: "", password: "" });
   const navigate = useNavigate();
 
@@ -18,8 +20,8 @@ function SignUp() {
 
         const data = await response.json();
         if (response.ok) {
-          alert("Welcome to the Haven! Please sign in with your new account.");
-          navigate("/Commune");
+          login(data.user, data.token);
+          navigate("/DaySelector");
         } else {
           alert(data.message);
         }

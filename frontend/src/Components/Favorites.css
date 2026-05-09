@@ -1,0 +1,139 @@
+.favorites-section {
+    padding: 100px 10%;
+    min-height: 80vh;
+    background-color: var(--bg-main);
+}
+
+.favorites-container {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 3rem;
+    margin-top: 3rem;
+}
+
+.fav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.fav-item {
+    background: white;
+    padding: 1.2rem 1.5rem;
+    border-radius: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(139, 111, 71, 0.05);
+    cursor: pointer;
+}
+
+.fav-item:hover {
+    transform: translateX(10px);
+    box-shadow: 0 10px 20px rgba(139, 111, 71, 0.1);
+    border-color: var(--primary-light);
+}
+
+.fav-item.active {
+    background: var(--primary);
+    color: white;
+}
+
+.fav-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.fav-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.fav-artist {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    margin-top: 4px;
+}
+
+.fav-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.play-btn-mini {
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(139, 111, 71, 0.2);
+    background: white;
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.fav-item.active .play-btn-mini {
+    background: white;
+    color: var(--primary);
+    border: none;
+}
+
+.remove-btn {
+    background: none;
+    border: none;
+    color: #ff4757;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 5px;
+    transition: transform 0.2s;
+}
+
+.remove-btn:hover {
+    transform: scale(1.2);
+}
+
+.fav-item.active .remove-btn {
+    color: white;
+}
+
+.fav-player {
+    position: sticky;
+    top: 100px;
+}
+
+.player-placeholder {
+    background: rgba(139, 111, 71, 0.03);
+    border: 2px dashed rgba(139, 111, 71, 0.2);
+    border-radius: 24px;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-main);
+    opacity: 0.5;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 5rem;
+}
+
+.empty-state p {
+    margin-bottom: 2rem;
+    font-size: 1.2rem;
+    opacity: 0.7;
+}
+
+@media (max-width: 900px) {
+    .favorites-container {
+        grid-template-columns: 1fr;
+    }
+    .fav-player {
+        position: static;
+        order: -1;
+    }
+}

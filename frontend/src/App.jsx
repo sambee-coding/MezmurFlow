@@ -8,6 +8,7 @@ import SignIn from "./Components/SignIn.jsx"
 import Origin from "./Components/Origin.jsx"
 import SignUp from "./Components/SignUp.jsx"
 import Navbar from "./Components/Navbar.jsx"
+import Favorites from "./Components/Favorites.jsx"
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
       <Route path='/Commune' element={<SignIn />} />
       <Route path='/Haven' element={<SignUp />} />
       <Route path='/Origin' element={<Origin />} />
+      <Route path='/Sanctuary' element={<Favorites />} />
 
       
       {/* Other pages */}
