@@ -44,6 +44,11 @@ app.get("/", (req, res) => {
   res.send("MezmurFlow Backend is running...");
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// Export for Vercel Serverless Functions
+module.exports = app;
+
+if (process.env.NODE_ENV !== 'production' || process.env.RENDER) {
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+}
