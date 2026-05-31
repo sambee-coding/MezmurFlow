@@ -2,9 +2,7 @@ import React from "react"
 import "./Home.css";
 import Logo from "../assets/Logo.png"
 import Orthodox from "../assets/Orthodox.jpg"
-import Fouro4 from '/src/Components/Fouro4.jsx'
 import { Link } from "react-router-dom";
-import SignIn from "./SignIn";
 
 
 
