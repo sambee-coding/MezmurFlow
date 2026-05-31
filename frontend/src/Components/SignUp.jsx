@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import "./SignIn.css"; // Reusing the premium styles
-import Logo from "../assets/Logo.png";
+import Logo from "../assets/logo.png";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 

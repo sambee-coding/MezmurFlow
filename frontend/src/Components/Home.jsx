@@ -1,7 +1,7 @@
 import React from "react"
 import "./Home.css";
-import Logo from "../assets/Logo.png"
-import Orthodox from "../assets/Orthodox.jpg"
+import Logo from "../assets/logo.png"
+import Orthodox from "../assets/orthodox.jpg"
 import { Link } from "react-router-dom";
 
 
