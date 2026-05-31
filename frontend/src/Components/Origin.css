@@ -1,0 +1,20 @@
+.Origin-Container{
+ 
+}
+.origin-content p{
+margin: 20px 30px;
+text-align: center;
+line-height: 1.9rem;
+}
+.origin-content h1 span{
+    margin-top: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.origin-content i{
+   font-size: 15px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
