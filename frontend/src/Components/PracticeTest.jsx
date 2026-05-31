@@ -1,5 +1,7 @@
 import React,{useState}  from "react";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 function PracticeTest(){
     const [data,setData] = useState(null);
     const [loading,setLoading] = useState(false);
@@ -9,7 +11,7 @@ function PracticeTest(){
         setLoading(true);
 
         try{
-            const response = await fetch("http://localhost:5000/api/mezmur?day=Monday");
+            const response = await fetch(`${API_URL}/api/mezmur?day=Monday`);
             const result = await response.json();
             setData(result);
         }

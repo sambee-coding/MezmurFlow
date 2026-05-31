@@ -3,6 +3,8 @@ import useAuth from "../hooks/useAuth";
 import { Link } from "react-router-dom";
 import "./Favorites.css";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 function Favorites() {
   const { token } = useAuth();
   const [favorites, setFavorites] = useState([]);
@@ -15,7 +17,7 @@ function Favorites() {
 
   const fetchFavorites = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/favorites", {
+      const response = await fetch(`${API_URL}/api/favorites`, {
         headers: { "Authorization": `Bearer ${token}` }
       });
       if (response.ok) {
@@ -31,7 +33,7 @@ function Favorites() {
 
   const removeFavorite = async (videoId) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/favorites/${videoId}`, {
+      const response = await fetch(`${API_URL}/api/favorites/${videoId}`, {
         method: "DELETE",
         headers: { "Authorization": `Bearer ${token}` }
       });

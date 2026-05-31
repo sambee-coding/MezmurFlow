@@ -7,7 +7,12 @@ const User = require('../models/User');
 // Signup route
 router.post('/signup', async (req, res) => {
     try {
+
         const { name, email, password } = req.body;
+        
+        if (!password || password.length < 6) {
+            return res.status(400).json({ message: "Password must be at least 6 characters long." });
+        }
         
         const existingUser = await User.findOne({ email });
         if (existingUser) {
@@ -37,9 +42,14 @@ router.post('/signup', async (req, res) => {
             token,
             user: { name: newUser.name, email: newUser.email }
         });
+
     } catch (err) {
         console.error("Signup error:", err);
-        res.status(500).json({ message: "Error creating account." });
+        // Expose validation errors or other specific issues
+        const message = err.name === 'ValidationError' 
+            ? Object.values(err.errors).map(val => val.message).join(', ')
+            : "Error creating account.";
+        res.status(err.name === 'ValidationError' ? 400 : 500).json({ message });
     }
 });
 
@@ -47,6 +57,11 @@ router.post('/signup', async (req, res) => {
 router.post('/signin', async (req, res) => {
     try {
         const { email, password } = req.body;
+        if(!email || !password) {
+            return res.status(400).json({
+                message:'please provide all the required fields.'
+            })
+        }
         
         const user = await User.findOne({ email });
         if (!user) {

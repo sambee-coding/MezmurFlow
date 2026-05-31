@@ -4,6 +4,8 @@ import useAuth from "../hooks/useAuth";
 import "./SignIn.css";
 import Logo from "../assets/Logo.png";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 function SignIn() {
     const { login } = useAuth();
     const navigate = useNavigate();
@@ -15,7 +17,7 @@ function SignIn() {
     console.log("Signing in...", email);
 
     try {
-        const response = await fetch("http://localhost:5000/api/auth/signin", {
+        const response = await fetch(`${API_URL}/api/auth/signin`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

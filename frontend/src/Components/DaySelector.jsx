@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import "./DaySelector.css";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 const ethiopianMonths = [
   "Meskerem", "Tikimt", "Hidar", "Tahsas", "Tir", "Yakatit", 
   "Magabit", "Miyazya", "Ginbot", "Sane", "Hamle", "Nahase", "Pagume"
@@ -19,11 +21,13 @@ const days = [
 ];
 
 function DaySelector() {
-  const { token, isLoggedIn } = useAuth();
+
+  const { token, isLoggedIn, loading: authLoading } = useAuth();
   const navigate = useNavigate();
   const [selectedDay, setSelectedDay] = useState(null);
   const [ethDate, setEthDate] = useState({ day: "", month: ethiopianMonths[0] });
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [mezmurData, setMezmurData] = useState(null);
   const [animate, setAnimate] = useState(false);
   const [activeVideoId, setActiveVideoId] = useState(null);
@@ -31,16 +35,18 @@ function DaySelector() {
 
   // Protection logic: Redirect to Sign In if not logged in
   useEffect(() => {
-    if (!token) {
-      navigate("/Commune");
-    } else {
-      fetchFavorites();
+    if (!authLoading) {
+      if (!token) {
+        navigate("/Commune");
+      } else {
+        fetchFavorites();
+      }
     }
-  }, [token, navigate]);
+  }, [token, navigate, authLoading]);
 
   const fetchFavorites = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/favorites", {
+      const response = await fetch(`${API_URL}/api/favorites`, {
         headers: { "Authorization": `Bearer ${token}` }
       });
       if (response.ok) {
@@ -57,13 +63,13 @@ function DaySelector() {
     
     try {
       if (isFav) {
-        await fetch(`http://localhost:5000/api/favorites/${mezmur.videoId}`, {
+        await fetch(`${API_URL}/api/favorites/${mezmur.videoId}`, {
           method: "DELETE",
           headers: { "Authorization": `Bearer ${token}` }
         });
         setFavorites(favorites.filter(f => f.videoId !== mezmur.videoId));
       } else {
-        const response = await fetch("http://localhost:5000/api/favorites", {
+        const response = await fetch(`${API_URL}/api/favorites`, {
           method: "POST",
           headers: { 
             "Authorization": `Bearer ${token}`,
@@ -92,9 +98,10 @@ function DaySelector() {
     setMezmurData(null);
     setAnimate(false);
     setActiveVideoId(null);
+    setError(null);
 
     try {
-      let url = `http://localhost:5000/api/mezmur?`;
+      let url = `${API_URL}/api/mezmur?`;
       if (dayName) url += `day=${dayName}`;
       else url += `month=${month}&ethDay=${day}`;
 
@@ -105,6 +112,14 @@ function DaySelector() {
       });
       const data = await response.json();
       
+      if (!response.ok) {
+        const errorMsg = data.error || data.message;
+        if (response.status === 400 && errorMsg === "Invalid token.") {
+            throw new Error("Your login session has expired. Please sign out and sign in again.");
+        }
+        throw new Error(errorMsg || `HTTP error ${response.status}`);
+      }
+
       if (data && typeof data === 'object') {
         setMezmurData(data);
         // Trigger animation after DOM has rendered the new data
@@ -120,6 +135,7 @@ function DaySelector() {
       }
     } catch (error) {
       console.error("Error fetching mezmur:", error);
+      setError(error.message || "Failed to fetch data.");
     } finally {
       setLoading(false);
     }
@@ -188,6 +204,13 @@ function DaySelector() {
       </div>
 
       {loading && <div className="loading-spinner">✨ Finding spiritual treasures...</div>}
+      
+      {error && (
+        <div className="error-message" style={{ color: '#c0392b', textAlign: 'center', margin: '2rem 0', padding: '1rem', background: '#fadbd8', borderRadius: '10px' }}>
+          <h4>Error Fetching Data</h4>
+          <p>{error}</p>
+        </div>
+      )}
 
       {mezmurData && (
   <div ref={resultsRef} className={`content-results ${animate ? "show" : ""}`}>
