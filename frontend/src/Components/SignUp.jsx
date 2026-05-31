@@ -27,8 +27,8 @@ function SignUp() {
         } else {
           alert(data.message);
         }
-    } catch (err) {
-        alert("Connection failed. Is the backend running?");
+    } catch {
+      alert("Registration failed. Please try again.");
     }
   };
 

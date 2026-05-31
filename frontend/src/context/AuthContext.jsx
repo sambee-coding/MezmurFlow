@@ -1,6 +1,7 @@
 
 import React, { createContext, useState, useEffect } from "react";
 
+/* eslint-disable react-refresh/only-export-components */
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -8,12 +9,20 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const logout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    setUser(null);
+    setToken(null);
+  };
+
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     const storedToken = localStorage.getItem("token");
     
     if (storedUser && storedToken) {
       try {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setUser(JSON.parse(storedUser));
         setToken(storedToken);
       } catch (e) {
@@ -29,13 +38,6 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem("token", userToken);
     setUser(userData);
     setToken(userToken);
-  };
-
-  const logout = () => {
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
-    setUser(null);
-    setToken(null);
   };
 
   return (

@@ -11,10 +11,6 @@ function Favorites() {
   const [loading, setLoading] = useState(true);
   const [activeVideoId, setActiveVideoId] = useState(null);
 
-  useEffect(() => {
-    fetchFavorites();
-  }, [token]);
-
   const fetchFavorites = async () => {
     try {
       const response = await fetch(`${API_URL}/api/favorites`, {
@@ -30,6 +26,12 @@ function Favorites() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchFavorites();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token]);
 
   const removeFavorite = async (videoId) => {
     try {

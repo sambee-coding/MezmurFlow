@@ -22,7 +22,7 @@ const days = [
 
 function DaySelector() {
 
-  const { token, isLoggedIn, loading: authLoading } = useAuth();
+  const { token, loading: authLoading } = useAuth();
   const navigate = useNavigate();
   const [selectedDay, setSelectedDay] = useState(null);
   const [ethDate, setEthDate] = useState({ day: "", month: ethiopianMonths[0] });
@@ -34,29 +34,33 @@ function DaySelector() {
   const [favorites, setFavorites] = useState([]);
 
   // Protection logic: Redirect to Sign In if not logged in
-  useEffect(() => {
-    if (!authLoading) {
-      if (!token) {
-        navigate("/Commune");
-      } else {
-        fetchFavorites();
-      }
-    }
-  }, [token, navigate, authLoading]);
-
   const fetchFavorites = async () => {
     try {
       const response = await fetch(`${API_URL}/api/favorites`, {
-        headers: { "Authorization": `Bearer ${token}` }
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
       });
       if (response.ok) {
         const data = await response.json();
         setFavorites(data);
       }
-    } catch (error) {
-      console.error("Error fetching favorites:", error);
+    } catch (err) {
+      console.error("Error fetching favorites:", err);
     }
   };
+
+  useEffect(() => {
+    if (!authLoading) {
+      if (!token) {
+        navigate("/Commune");
+      } else {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        fetchFavorites();
+      }
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token, navigate, authLoading]);
 
   const toggleFavorite = async (mezmur) => {
     const isFav = favorites.some(f => f.videoId === mezmur.videoId);
