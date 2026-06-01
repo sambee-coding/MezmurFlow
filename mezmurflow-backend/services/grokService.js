@@ -16,17 +16,21 @@ const getDailySpiritualContent = async (day, ethMonth, ethDay) => {
     Ethiopian Day: ${ethDay || "N/A"}
 
     TASK:
-    1. Identify the primary spiritual theme or saint commemorated on this day.
-    2. Recommend 3-5 authentic Ethiopian Orthodox Mezmurs that match this theme.
+    1. Identify the primary spiritual theme or saint commemorated on this day in the Ethiopian Orthodox Tewahedo Church.
+    2. Recommend 3-5 REAL and well-known Ethiopian Orthodox Tewahedo Mezmurs (hymns) that match this theme.
+       - ONLY recommend mezmurs from the Ethiopian Orthodox Tewahedo tradition.
+       - DO NOT recommend Protestant, Evangelical, or any non-Orthodox songs.
+       - Use REAL artist names from the Ethiopian Orthodox tradition such as: Zemari Tewodros Yosef, Zemari Diaqon Daniel Kibret, Zemari Yilma Hailu, Mezmur Dawit, Diaqon Zelalem, Diaqon Tewodros, Zemari Muluken Abebe, or other well-known Orthodox mezmur singers.
+       - Provide the mezmur title in transliterated Amharic (e.g., "Tewodros Yosef - Egziabher Yibarek") for better searchability.
     3. Provide a concise summary of the "Senkessar" (Synaxarium) story for this specific date.
-    4. Provide a spiritual reflection or related Bible verse.
+    4. Provide a spiritual reflection or related Bible verse from the Orthodox canon.
 
     CRITICAL: YOU MUST RETURN ONLY A JSON OBJECT. NO MARKDOWN. NO EXTRA TEXT.
     JSON SCHEMA:
     {
       "theme": "Title of the day/theme",
       "mezmurs": [
-        { "title": "Mezmur Title in English or transliterated Amharic", "artist": "Artist name" }
+        { "title": "Mezmur Title in transliterated Amharic", "artist": "Real Orthodox artist name" }
       ],
       "story": "A detailed but concise spiritual story or Senkessar entry",
       "reflection": "A spiritual reflection or verse"

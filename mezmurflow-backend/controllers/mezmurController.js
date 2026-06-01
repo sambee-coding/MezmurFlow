@@ -18,8 +18,10 @@ const getMezmurSelection = async (req, res) => {
     if (data.mezmurs && Array.isArray(data.mezmurs)) {
       data.mezmurs = await Promise.all(
         data.mezmurs.map(async (m) => {
-          const query = `${m.title} ${m.artist} Mezmur`;
+          const query = `${m.title} ${m.artist} Ethiopian Orthodox Mezmur`;
+          console.log("YouTube search query:", query);
           const videoId = await youtubeService.searchYouTube(query);
+          console.log("YouTube result for", m.title, ":", videoId || "NO VIDEO FOUND");
           return { ...m, videoId }; // Return the mezmur with the new videoId
         })
       );
