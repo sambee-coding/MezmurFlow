@@ -33,7 +33,7 @@
     align-items: center;
     gap: 10px;
     border: 1px solid rgba(139, 111, 71, 0.2);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+   
 }
 
 .month-picker, .day-input {
@@ -113,7 +113,7 @@
     justify-content: space-between;
     height: 200px;
     text-align: left;
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    
 }
 
 .day-card:hover {

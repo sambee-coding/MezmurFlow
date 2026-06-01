@@ -22,7 +22,7 @@ mongoose.connect(MONGODB_URI)
     .then(() => console.log("CONNECTED TO MONGODB ATLAS"))
     .catch((err) => console.error("COULD NOT CONNECT TO MONGODB:", err));
 
-console.log("API KEY FOUND:", process.env.GEMINI_API_KEY ? "YES (Starts with " + process.env.GEMINI_API_KEY.substring(0, 5) + ")" : "NO");
+console.log("API KEY FOUND:", process.env.GROQ_API_KEY ? "YES (Starts with " + process.env.GROQ_API_KEY.substring(0, 5) + ")" : "NO");
 
 const app = express();
 const PORT = process.env.PORT || 5000;

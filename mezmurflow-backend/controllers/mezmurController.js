@@ -1,5 +1,5 @@
 // mezmurflow-backend/controllers/mezmurController.js
-const geminiService = require("../services/geminiService");
+const grokService = require("../services/grokService");
 const youtubeService = require("../services/youtubeService"); // 1. Import the new service
 
 const getMezmurSelection = async (req, res) => {
@@ -10,8 +10,8 @@ const getMezmurSelection = async (req, res) => {
   }
 
   try {
-    // 2. Get the spiritual content from Gemini first
-    const data = await geminiService.getDailySpiritualContent(day, month, ethDay);
+    // 2. Get the spiritual content from Grok
+    const data = await grokService.getDailySpiritualContent(day, month, ethDay);
 
     // 3. ENRICHMENT: Add YouTube IDs to each mezmur
     // We use Promise.all to search for all of them in parallel (faster!)
