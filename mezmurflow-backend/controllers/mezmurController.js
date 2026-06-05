@@ -13,22 +13,28 @@ const getMezmurSelection = async (req, res) => {
     // 2. Get the spiritual content from Grok
     const data = await grokService.getDailySpiritualContent(day, month, ethDay);
 
-    // 3. ENRICHMENT: Add YouTube IDs to each mezmur
-    // We use Promise.all to search for all of them in parallel (faster!)
-    if (data.mezmurs && Array.isArray(data.mezmurs)) {
-      data.mezmurs = await Promise.all(
-        data.mezmurs.map(async (m) => {
+        // 3. ENRICHMENT: Add YouTube IDs to each mezmur
+    const mezmursArray = data.mezmurs || data.recommended_mezmurs;
+    
+    if (mezmursArray && Array.isArray(mezmursArray)) {
+      // 1. Save the result to a NEW constant
+      const enrichedMezmurs = await Promise.all(
+        mezmursArray.map(async (m) => {
           const query = `${m.title} ${m.artist} Ethiopian Orthodox Mezmur`;
           console.log("YouTube search query:", query);
           const videoId = await youtubeService.searchYouTube(query);
           console.log("YouTube result for", m.title, ":", videoId || "NO VIDEO FOUND");
-          return { ...m, videoId }; // Return the mezmur with the new videoId
+          return { ...m, videoId }; 
         })
       );
+      
+      // 2. Put the enriched array BACK into the data object!
+      data.mezmurs = enrichedMezmurs;
+      data.recommended_mezmurs = enrichedMezmurs;
     }
-
     res.json(data);
-  } catch (error) {
+   }
+    catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
