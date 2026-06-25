@@ -1,4 +1,4 @@
-# MezmurFlow 🎶
+# MezmurFlow ✨ 
 
 > *Ever spent more time searching for the right Mezmur than actually listening to it?*
 
@@ -89,7 +89,7 @@ MezmurFlow/
 
 ---
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 - Node.js v18+
@@ -178,7 +178,7 @@ The app will be running at `http://localhost:5173`.
 
 ## 🙏 About the App
 
-MezmurFlow was built with deep respect for the Ethiopian Orthodox Tewahedo tradition. The AI is specifically instructed to recommend only authentic Orthodox Mezmurs from the Tewahedo tradition, citing real and well-known zemaris (cantors) such as Zemari Tewodros Yosef, Zemari Yilma Hailu, and Diaqon Daniel Kibret.
+MezmurFlow was built with deep respect for the Ethiopian Orthodox Tewahedo tradition. The AI is specifically instructed to recommend only authentic Orthodox Mezmurs from the Tewahedo tradition, citing real and well-known zemaris (cantors) such as Zemari Tewodros Yosef, Zemari Yilma Hailu and many more.
 
 The app uses the **Ethiopian Calendar** for date-based lookups, honoring the liturgical framework of the church.
 
@@ -187,7 +187,6 @@ The app uses the **Ethiopian Calendar** for date-based lookups, honoring the lit
 ## 👤 Author
 
 **Samrawit Bitew (Sambee)**  
-Mobile Application Development Student — Bahir Dar Institute of Technology, Bahir Dar University  
 [GitHub: @sambee-coding](https://github.com/sambee-coding)
 
 ---
